@@ -109,8 +109,8 @@ async function buildBracket(): Promise<string> {
   });
   await manager.update.match({
       id:1,
-      opponent1: { score: 88, result: 'win'},
-      opponent2: { score: 58 }
+      opponent1: { score: 58 },
+      opponent2: { score: 88, result: 'win' }
   });
   await manager.update.match({
       id:2,
@@ -164,7 +164,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'Armchair Athletics')[0].score
     },
     opponent2:{
-      score: teamData.filter((e) => e.name == 'Josh and the Whale')[0].score
+      score: teamData.filter((e) => e.name == 'Out of Luck')[0].score
     }
   });
   
