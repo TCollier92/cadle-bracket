@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	mode: 'development',
@@ -31,8 +32,11 @@ module.exports = {
 		aggregateTimeout:500,
 		poll:1000
 	},
-	plugins: [new HtmlWebpackPlugin({
+	plugins: [
+		new HtmlWebpackPlugin({
 		title: 'CMCC Bracket',
 		template: './src/index.html'
-	})]
+		}),
+		new Dotenv()
+	]
 };

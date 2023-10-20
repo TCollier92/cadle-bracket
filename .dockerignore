@@ -1,3 +1,8 @@
 ./bracket-backend/node_modules
 ./bracket-backend/dist
 ./bracket-backend/.env
+./bracket-backend/public
+./bracket-frontend/node_modules
+./bracket-frontend/lib
+./bracket-frontend/dist
+./bracket-frontend/.env
