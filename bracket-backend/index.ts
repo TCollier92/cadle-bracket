@@ -13,6 +13,7 @@ const port = process.env.PORT;
 
 let nextFetch:number = Date.now() - 1;
 let cachedData:string = '';
+let weekIsFinal:boolean = false;
 
 function fetchPage(url: string): Promise<string> {
   const HTMLData = axios
@@ -30,6 +31,7 @@ function fetchPage(url: string): Promise<string> {
 async function getYahooData(): Promise<any[]> {
   const d1Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleague');
   const d1Dom = cheerio.load(d1Data);
+  weekIsFinal = d1Dom('#matchupweek').find('div.Bg-shade').find('div.Ta-end').find('span').html() == 'Final results';
   const d1MatchupRows = d1Dom('#matchupweek')
     .find('.List')
     .find('li');
@@ -44,15 +46,17 @@ async function getYahooData(): Promise<any[]> {
     .find('div.Grid-h-mid.Nowrap');
   let Teams:any = []
   d1TeamContainers.each(function(i,el) {
+    const score = weekIsFinal ? (parseInt(d1Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d1Dom(el).find('F-shade').html() ?? '0'));
     Teams.push({
       name: d1Dom(el).find('a.F-link').text(),
-      score: parseInt(d1Dom(el).find('div.Italic').html() ?? '0')
+      score: score
     });
   });
   d2TeamContainers.each(function(i,el) {
+    const score = weekIsFinal ? (parseInt(d1Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d1Dom(el).find('F-shade').html() ?? '0'));
     Teams.push({
       name: d2Dom(el).find('a.F-link').text(),
-      score: parseInt(d2Dom(el).find('div.Italic').html() ?? '0')
+      score: score
     });
   });
   return Teams;
@@ -75,30 +79,37 @@ async function buildBracket(): Promise<string> {
         'Armchair Athletics',
         'Josh and the Whale',
         'Out of Luck',
+
         'Merseyside Enforcers',
         'The Sorcerer’s Apprentice',
         'Suicide Squad',
         'La Résistance',
+
         null,
         'Night Shift Packers',
         'P\'Town Hurri-CAINS',
         'Seddon\'s Skylines',
+
         null,
         'The Kool Kats',
         null,
         'Huddersfield Eagles',
+
         'The Auto-Warriors',
         'Moneyballers',
         'J E T S JETSJETSJETS',
         'Founding Father',
+
         null,
         'Ayle Oola Ostriches',
         'THE FREAKS OF SPORT',
         'Hernandez\'s Hitmen',
-        'ItsFarrellyFootball',
+
+        'ItsFarrellyFootball',  
         'Real slim Brady',
         null,
         'Ghost of Mufasa',
+
         'Sankey Slingers Ltd',
         'The Tucker Rule',
         'Greg’s Great Team',
@@ -107,57 +118,68 @@ async function buildBracket(): Promise<string> {
         seedOrdering: ['natural']
     }
   });
+  // Whale-Luck
   await manager.update.match({
       id:1,
       opponent1: { score: 58 },
       opponent2: { score: 88, result: 'win' }
   });
+  // Enforcers-Sorc
   await manager.update.match({
       id:2,
       opponent1: { score: 81, result: 'win'},
       opponent2: { score: 67 }
   });
+  // Suicide-LaRes
   await manager.update.match({
       id:3,
       opponent1: { score: 89 },
       opponent2: { score: 107, result: 'win' }
   });
+  //PTown Skylines
   await manager.update.match({
       id:5,
       opponent1: { score: 86, result: 'win'},
       opponent2: { score: 79 }
   });
+  //Auto-Ballers
   await manager.update.match({
       id:8,
       opponent1: { score: 83, result: 'win'},
       opponent2: { score: 61 }
   });
+  //Jets-Father
   await manager.update.match({
       id:9,
       opponent1: { score: 79, result: 'win'},
       opponent2: { score: 59 }
   });
+  // Freaks-Hitmen
   await manager.update.match({
       id:11,
       opponent1: { score: 91, result: 'win'},
       opponent2: { score: 79 }
   });
+  //IFF-RSB
   await manager.update.match({
       id:12,
       opponent1: { score: 93, result: 'win'},
       opponent2: { score: 79 }
   });
+  //Sling-Tuck
   await manager.update.match({
       id:14,
       opponent1: { score: 112, result: 'win'},
       opponent2: { score: 69 }
   });
+  //GGT-Prince
   await manager.update.match({
       id:15,
       opponent1: { score: 68, result: 'win'},
       opponent2: { score: 61 }
   });
-  
+
+  //chairs-luck
   await manager.update.match({
     id:16,
     opponent1:{
@@ -167,7 +189,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'Out of Luck')[0].score
     }
   });
-  
+  //enforcers-LaRes
   await manager.update.match({
     id:17,
     opponent1:{
@@ -177,7 +199,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'La Résistance')[0].score
     }
   });
-
+  //NSP-PTown
   await manager.update.match({
     id:18,
     opponent1:{
@@ -187,7 +209,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'P\'Town Hurri-CAINS')[0].score
     }
   });
-
+  //KK-Eagles
   await manager.update.match({
     id:19,
     opponent1:{
@@ -197,7 +219,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'Huddersfield Eagles')[0].score
     }
   });
-
+  //Auto-Jets
   await manager.update.match({
     id:20,
     opponent1:{
@@ -207,7 +229,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'J E T S JETSJETSJETS')[0].score
     }
   });
-
+  //Ostriches-Freaks
   await manager.update.match({
     id:21,
     opponent1:{
@@ -217,7 +239,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'THE FREAKS OF SPORT')[0].score
     }
   });
-
+  //IFF-Ghost
   await manager.update.match({
     id:22,
     opponent1:{
@@ -227,7 +249,7 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'Ghost of Mufasa')[0].score
     }
   });
-
+  //Sling-GGT
   await manager.update.match({
     id:23,
     opponent1:{
