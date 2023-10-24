@@ -80,40 +80,41 @@ async function buildBracket(): Promise<string> {
         'Josh and the Whale',
         'Out of Luck',
 
+        'Sankey Slingers Ltd',
+        'The Tucker Rule',
+        'Greg’s Great Team',
+        'The Prince Of Dallas',
+
         'Merseyside Enforcers',
         'The Sorcerer’s Apprentice',
         'Suicide Squad',
         'La Résistance',
 
         null,
-        'Night Shift Packers',
-        'P\'Town Hurri-CAINS',
-        'Seddon\'s Skylines',
-
-        null,
         'The Kool Kats',
         null,
         'Huddersfield Eagles',
-
-        'The Auto-Warriors',
-        'Moneyballers',
-        'J E T S JETSJETSJETS',
-        'Founding Father',
 
         null,
         'Ayle Oola Ostriches',
         'THE FREAKS OF SPORT',
         'Hernandez\'s Hitmen',
 
+        null,
+        'Night Shift Packers',
+        'P\'Town Hurri-CAINS',
+        'Seddon\'s Skylines',
+
         'ItsFarrellyFootball',  
         'Real slim Brady',
         null,
         'Ghost of Mufasa',
 
-        'Sankey Slingers Ltd',
-        'The Tucker Rule',
-        'Greg’s Great Team',
-        'The Prince Of Dallas'],
+        'The Auto-Warriors',
+        'Moneyballers',
+        'J E T S JETSJETSJETS',
+        'Founding Father'
+      ],
     settings: {
         seedOrdering: ['natural']
     }
@@ -124,140 +125,109 @@ async function buildBracket(): Promise<string> {
       opponent1: { score: 58 },
       opponent2: { score: 88, result: 'win' }
   });
-  // Enforcers-Sorc
-  await manager.update.match({
-      id:2,
-      opponent1: { score: 81, result: 'win'},
-      opponent2: { score: 67 }
-  });
-  // Suicide-LaRes
-  await manager.update.match({
-      id:3,
-      opponent1: { score: 89 },
-      opponent2: { score: 107, result: 'win' }
-  });
-  //PTown Skylines
-  await manager.update.match({
-      id:5,
-      opponent1: { score: 86, result: 'win'},
-      opponent2: { score: 79 }
-  });
-  //Auto-Ballers
-  await manager.update.match({
-      id:8,
-      opponent1: { score: 83, result: 'win'},
-      opponent2: { score: 61 }
-  });
-  //Jets-Father
-  await manager.update.match({
-      id:9,
-      opponent1: { score: 79, result: 'win'},
-      opponent2: { score: 59 }
-  });
-  // Freaks-Hitmen
-  await manager.update.match({
-      id:11,
-      opponent1: { score: 91, result: 'win'},
-      opponent2: { score: 79 }
-  });
-  //IFF-RSB
-  await manager.update.match({
-      id:12,
-      opponent1: { score: 93, result: 'win'},
-      opponent2: { score: 79 }
-  });
   //Sling-Tuck
   await manager.update.match({
-      id:14,
+      id:2,
       opponent1: { score: 112, result: 'win'},
       opponent2: { score: 69 }
   });
   //GGT-Prince
   await manager.update.match({
-      id:15,
+      id:3,
       opponent1: { score: 68, result: 'win'},
       opponent2: { score: 61 }
   });
+  // Enforcers-Sorc
+  await manager.update.match({
+      id:4,
+      opponent1: { score: 81, result: 'win'},
+      opponent2: { score: 67 }
+  });
+  // Suicide-LaRes
+  await manager.update.match({
+      id:5,
+      opponent1: { score: 89 },
+      opponent2: { score: 107, result: 'win' }
+  });
+    // Freaks-Hitmen
+    await manager.update.match({
+      id:9,
+      opponent1: { score: 91, result: 'win'},
+      opponent2: { score: 79 }
+  });
+  //PTown Skylines
+  await manager.update.match({
+      id:11,
+      opponent1: { score: 86, result: 'win'},
+      opponent2: { score: 79 }
+  });
+    //IFF-RSB
+    await manager.update.match({
+      id:12,
+      opponent1: { score: 93, result: 'win'},
+      opponent2: { score: 79 }
+  });
+  //Auto-Ballers
+  await manager.update.match({
+      id:14,
+      opponent1: { score: 83, result: 'win'},
+      opponent2: { score: 61 }
+  });
+  //Jets-Father
+  await manager.update.match({
+      id:15,
+      opponent1: { score: 79, result: 'win'},
+      opponent2: { score: 59 }
+  });
+
 
   //chairs-luck
   await manager.update.match({
     id:16,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'Armchair Athletics')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'Out of Luck')[0].score
-    }
+    opponent1: { score: 85 },
+    opponent2: { score: 105, result: 'win' }
+  });
+  //Sling-GGT
+  await manager.update.match({
+    id:17,
+    opponent1: { score: 93, result: 'win' },
+    opponent2: { score: 70 }
   });
   //enforcers-LaRes
   await manager.update.match({
-    id:17,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'Merseyside Enforcers')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'La Résistance')[0].score
-    }
-  });
-  //NSP-PTown
-  await manager.update.match({
     id:18,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'Night Shift Packers')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'P\'Town Hurri-CAINS')[0].score
-    }
+    opponent1: { score: 60 },
+    opponent2: { score: 84, result: 'win' }
   });
   //KK-Eagles
   await manager.update.match({
     id:19,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'The Kool Kats')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'Huddersfield Eagles')[0].score
-    }
-  });
-  //Auto-Jets
-  await manager.update.match({
-    id:20,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'The Auto-Warriors')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'J E T S JETSJETSJETS')[0].score
-    }
+    opponent1: { score: 90, result: 'win' },
+    opponent2: { score: 83 }
   });
   //Ostriches-Freaks
   await manager.update.match({
+    id:20,
+    opponent1: { score: 78 },
+    opponent2: { score: 90, result: 'win' }
+  });
+  //NSP-PTown
+  await manager.update.match({
     id:21,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'Ayle Oola Ostriches')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'THE FREAKS OF SPORT')[0].score
-    }
+    opponent1: { score: 104, result: 'win' },
+    opponent2: { score: 103 }
   });
   //IFF-Ghost
   await manager.update.match({
     id:22,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'ItsFarrellyFootball')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'Ghost of Mufasa')[0].score
-    }
+    opponent1: { score: 80 },
+    opponent2: { score: 89, result: 'win' }
   });
-  //Sling-GGT
+  //Auto-Jets
   await manager.update.match({
     id:23,
-    opponent1:{
-      score: teamData.filter((e) => e.name == 'Sankey Slingers Ltd')[0].score
-    },
-    opponent2:{
-      score: teamData.filter((e) => e.name == 'Greg’s Great Team')[0].score
-    }
+    opponent1: { score: 72 },
+    opponent2: { score: 73, result: 'win' }
   });
 
   cachedData = JSON.stringify(db);
