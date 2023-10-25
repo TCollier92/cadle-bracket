@@ -46,14 +46,14 @@ async function getYahooData(): Promise<any[]> {
     .find('div.Grid-h-mid.Nowrap');
   let Teams:any = []
   d1TeamContainers.each(function(i,el) {
-    const score = weekIsFinal ? (parseInt(d1Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d1Dom(el).find('F-shade').html() ?? '0'));
+    const score = weekIsFinal ? (parseInt(d1Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d1Dom(el).find('.Grid-u-1-4').find('.F-shade').html() ?? '0'));
     Teams.push({
       name: d1Dom(el).find('a.F-link').text(),
       score: score
     });
   });
   d2TeamContainers.each(function(i,el) {
-    const score = weekIsFinal ? (parseInt(d1Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d1Dom(el).find('F-shade').html() ?? '0'));
+    const score = weekIsFinal ? (parseInt(d2Dom(el).find('.Fz-lg').html() ?? '0')) : (parseInt(d2Dom(el).find('.Grid-u-1-4').find('.F-shade').html() ?? '0'));
     Teams.push({
       name: d2Dom(el).find('a.F-link').text(),
       score: score
@@ -230,11 +230,51 @@ async function buildBracket(): Promise<string> {
     opponent2: { score: 73, result: 'win' }
   });
 
+  // OOL - Sling
+  await manager.update.match({
+    id:24,
+    opponent1:{
+      score: teamData.filter((e) => e.name == 'Out of Luck')[0].score
+    },
+    opponent2:{
+      score: teamData.filter((e) => e.name == 'Sankey Slingers Ltd')[0].score
+    }
+  });
+  // LaRes-Kats
+  await manager.update.match({
+    id:25,
+    opponent1:{
+      score: teamData.filter((e) => e.name == 'La Résistance')[0].score
+    },
+    opponent2:{
+      score: teamData.filter((e) => e.name == 'The Kool Kats')[0].score
+    }
+  });
+  // Freaks-NSP
+  await manager.update.match({
+    id:26,
+    opponent1:{
+      score: teamData.filter((e) => e.name == 'THE FREAKS OF SPORT')[0].score
+    },
+    opponent2:{
+      score: teamData.filter((e) => e.name == 'Night Shift Packers')[0].score
+    }
+  });
+  // Ghost-JETS
+  await manager.update.match({
+    id:27,
+    opponent1:{
+      score: teamData.filter((e) => e.name == 'Ghost of Mufasa')[0].score
+    },
+    opponent2:{
+      score: teamData.filter((e) => e.name == 'J E T S JETSJETSJETS')[0].score
+    }
+  });
+
   cachedData = JSON.stringify(db);
   nextFetch = Date.now() + 15000;
   return cachedData;
 }
-
 app.use(express.static('public'));
 
 app.get('/bracketData', async (req: Request, res: Response) => {
