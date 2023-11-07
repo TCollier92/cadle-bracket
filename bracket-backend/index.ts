@@ -278,17 +278,30 @@ async function buildBracket(): Promise<string> {
   await manager.update.match({
     id:28,
     opponent1:{
-      score: teamData.filter((e) => e.name == 'The Kool Kats')[0].score
+      score: 101,
+      result: 'win'
     },
     opponent2:{
-      score: teamData.filter((e) => e.name == 'THE FREAKS OF SPORT')[0].score
+      score: 93
     }
   });
   // Sling Ghost
   await manager.update.match({
     id:29,
     opponent1:{
-      score: teamData.filter((e) => e.name == 'Ghost of Mufasa')[0].score
+      score: 68
+    },
+    opponent2:{
+      score: 85,
+      result: 'win'
+    }
+  });
+
+  // Kats Sling FINAL
+  await manager.update.match({
+    id:30,
+    opponent1:{
+      score: teamData.filter((e) => e.name == 'The Kool Kats')[0].score
     },
     opponent2:{
       score: teamData.filter((e) => e.name == 'Sankey Slingers Ltd')[0].score
