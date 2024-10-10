@@ -220,12 +220,11 @@ async function buildBracket(): Promise<string> {
       score: teamData.filter((e) => e.name == 'The Sorcerer\'s Apprentice')[0].score
     }
   });
-
+  
   cachedData = JSON.stringify(db);
   nextFetch = Date.now() + 15000;
   return cachedData;
 }
-
 app.use(express.static('public'));
 
 app.get('/bracketData', async (req: Request, res: Response) => {
