@@ -29,7 +29,7 @@ function fetchPage(url: string): Promise<string> {
 }
 
 async function getYahooData(): Promise<any[]> {
-  const d1Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleague?matchup_week=9&module=matchups&lhst=matchups');
+  const d1Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleague?matchup_week=5&module=matchups&lhst=matchups');
   const d1Dom = cheerio.load(d1Data);
   weekIsFinal = d1Dom('#matchupweek').find('div.Bg-shade').find('div.Ta-end').find('span').html() == 'Final results';
   const d1MatchupRows = d1Dom('#matchupweek')
@@ -37,7 +37,7 @@ async function getYahooData(): Promise<any[]> {
     .find('li');
   const d1TeamContainers = d1MatchupRows
     .find('div.Grid-h-mid.Nowrap');
-  const d2Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleaguedivision2?matchup_week=9&module=matchups&lhst=matchups');
+  const d2Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleaguedivision2?matchup_week=5&module=matchups&lhst=matchups');
   const d2Dom = cheerio.load(d2Data);
   const d2MatchupRows = d2Dom('#matchupweek')
     .find('.List')
@@ -62,6 +62,32 @@ async function getYahooData(): Promise<any[]> {
   return Teams;
 }
 
+const t_freaks = 'THE FREAKS OF SPORT';
+const t_auto = 'The Auto-Warriors';
+const t_sorc = 'The Sorcerer\'s Apprentice';
+const t_tuck = 'Tuck';
+const t_hernandez = 'Hernandez\'s Hitmen';
+const t_hudds = 'Huddersfield Eagles';
+const t_asp = 'Afternoon Shift Packers';
+const t_farrelly = 'ItsFarrellyFootball';
+const t_lares = 'La Résistance';
+const t_chairs = 'Armchair Athletics';
+const t_ostriches = 'Ayle Oola Ostriches';
+const t_ptown = 'P\'Town Hurri-CAINS';
+const t_kats = 'The Kool Kats';
+const t_jets = 'J E T S JETSJETSJETS';
+const t_enforcers = 'Merseyside Enforcers';
+const t_father = 'Founding Father';
+const t_ghost = 'Ghost of Mufasa';
+const t_skylines = 'Skylines';
+const t_prince = 'The Prince Of Dallas';
+const t_mdm = 'Million Dollar Man';
+const t_ballers = 'Moneyballers';
+const t_slingers = 'Sankey Slingers Ltd';
+const t_ggt = 'Greg’s Great Team';
+const t_muffin = 'The Muffin Men';
+const t_captain = 'The Captain'
+
 async function buildBracket(): Promise<string> {
   if (nextFetch >= Date.now()) {
     return cachedData;
@@ -74,310 +100,129 @@ async function buildBracket(): Promise<string> {
     name: 'CMCC',
     type: 'single_elimination',
     seeding: [
+      t_auto,
+      t_asp,
+      t_kats,
+      t_hudds,
+      t_skylines,
+      t_ghost,
+      t_lares,
+      t_jets,
+      t_ostriches,
+      t_mdm,
+      t_captain,
+      t_muffin,
+      t_ballers,
+      t_chairs,
+      t_slingers,
+      t_sorc,
+      t_farrelly,
+      t_father,
+      
+      t_ggt,
       null,
-      'THE FREAKS OF SPORT',
+      t_freaks,
       null,
-      'Suicide Squad',
-      'The Auto-Warriors',
-      'The Sorcerer\'s Apprentice',
-      'Out of Luck',
-      'The Tucker Rule',
-      'Hernandez\'s Hitmen',
-      'Huddersfield Eagles',
-      'Afternoon Shift Packers',
-      'ItsFarrellyFootball',
-      'La Résistance',
-      'Armchair Athletics',
+      t_hernandez,
       null,
-      'Ayle Oola Ostriches',
-
-      'P\'Town Hurri-CAINS',
-      'The Kool Kats',
-      'J E T S JETSJETSJETS',
-      'Josh and the Whale',
+      t_prince,
       null,
-      'Merseyside Enforcers',
-      'Founding Father',
-      'Ghost of Mufasa',
-      'Skylines',
-      'The Prince Of Dallas',
-      'Real slim Brady',
-      'Moneyballers',
+      t_enforcers,
       null,
-      'Sankey Slingers Ltd',
+      t_tuck,
       null,
-      'Greg’s Great Team',
+      t_ptown,
+      null
     ],
     settings: {
       seedOrdering: ['natural']
     }
   });
-  // Auto-Sorc
+
+  //Round1
+  await manager.update.match({
+    id: 0,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_auto)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_asp)[0].score
+    }
+  });
+  await manager.update.match({
+    id: 1,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_kats)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_hudds)[0].score
+    }
+  });
   await manager.update.match({
     id: 2,
     opponent1: {
-      score: 48
+      score: teamData.filter((e) => e.name == t_skylines)[0].score,
     },
     opponent2: {
-      score: 148,
-      result: 'win'
+      score: teamData.filter((e) => e.name == t_ghost)[0].score
     }
   });
-    // Luck-Tuck
-    await manager.update.match({
-      id: 3,
-      opponent1: {
-        score: 97,
-        result: 'win'
-      },
-      opponent2: {
-        score: 96
-      }
-    });
-    // Hitmen-Eagles
-    await manager.update.match({
-      id: 4,
-      opponent1: {
-        score: 96
-      },
-      opponent2: {
-        score: 107,
-        result: 'win'
-      }
-    });
-    // ASP-IFF
-    await manager.update.match({
-      id: 5,
-      opponent1: {
-        score: 116
-      },
-      opponent2: {
-        score: 117,
-        result: 'win'
-      }
-    });
-      // La Res-Chairs
+  await manager.update.match({
+    id: 3,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_lares)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_jets)[0].score
+    }
+  });
+  await manager.update.match({
+    id: 4,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_ostriches)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_mdm)[0].score
+    }
+  });
+  await manager.update.match({
+    id: 5,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_captain)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_muffin)[0].score
+    }
+  });
   await manager.update.match({
     id: 6,
     opponent1: {
-      score: 95,
-      result: 'win'
+      score: teamData.filter((e) => e.name == t_ballers)[0].score,
     },
     opponent2: {
-      score: 69
+      score: teamData.filter((e) => e.name == t_chairs)[0].score
     }
   });
-  // Ptown-Kats
+  await manager.update.match({
+    id: 7,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_slingers)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_sorc)[0].score
+    }
+  });
   await manager.update.match({
     id: 8,
     opponent1: {
-      score: 54
+      score: teamData.filter((e) => e.name == t_farrelly)[0].score,
     },
     opponent2: {
-      score: 71,
-      result: 'win'
+      score: teamData.filter((e) => e.name == t_father)[0].score
     }
   });
-    // JETS-Whale
-await manager.update.match({
-  id: 9,
-  opponent1: {
-    score: 109,
-    result: 'win'
-  },
-  opponent2: {
-    score: 106
-  }
-});
-// Father-Ghost
-await manager.update.match({
-  id: 11,
-  opponent1: {
-    score: 82,
-    result: 'win'
-  },
-  opponent2: {
-    score: 79
-  }
-});
-  // Skyline-Dallas
-  await manager.update.match({
-    id: 12,
-    opponent1: {
-      score: 86,
-      result: 'win'
-    },
-    opponent2: {
-      score: 33
-    }
-  });
-  // RSB-Ballers
-  await manager.update.match({
-    id: 13,
-    opponent1: {
-      score: 62,
-    },
-    opponent2: {
-      score: 114,
-      result: 'win'
-    }
-  });
+
   //Round 2
-      //FREAKS-suicide
-      await manager.update.match({
-        id: 16,
-        opponent1: {
-          score: 50
-        },
-        opponent2: {
-          score: 59,
-          result:'win'
-        }
-      });
-      //Sorc-Luck
-      await manager.update.match({
-        id: 17,
-        opponent1: {
-          score: 121,
-          result: 'win'
-        },
-        opponent2: {
-          score: 87
-        }
-      });
-    //Eagles-IFF
-    await manager.update.match({
-      id: 18,
-      opponent1: {
-        score: 76,
-      },
-      opponent2: {
-        score: 94,
-        result: 'win'
-      }
-    });
-      //LaRes-Ostrich
-  await manager.update.match({
-    id: 19,
-    opponent1: {
-      score: 82,
-      result: 'win'
-    },
-    opponent2: {
-      score: 77
-    }
-  });
-   //Kats-Jets
-   await manager.update.match({
-    id: 20,
-    opponent1: {
-      score: 67
-    },
-    opponent2: {
-      score: 82,
-      result: 'win'
-    }
-  });
-//Enforcers-Father
-await manager.update.match({
-  id: 21,
-  opponent1: {
-    score: 119,
-    result: 'win'
-  },
-  opponent2: {
-    score: 84
-  }
-});
-  //Skylines-Ballers
-  await manager.update.match({
-    id: 22,
-    opponent1: {
-      score: 101
-    },
-    opponent2: {
-      score: 106,
-      result: 'win'
-    }
-  });
-    //Slingers-GGT
-    await manager.update.match({
-      id: 23,
-      opponent1: {
-        score: 71,
-      },
-      opponent2: {
-        score: 126,
-        result: 'win'
-      }
-    });
-  //Round 3
-  //Suicide-Sorc
-  await manager.update.match({
-    id: 24,
-    opponent1: {
-      score: 98,
-      result:'win'
-    },
-    opponent2: {
-      score: 96
-    }
-  });
-  //IFF-LaRes
-  await manager.update.match({
-    id: 25,
-    opponent1: {
-      score: 85,
-    },
-    opponent2: {
-      score: 88,
-      result:'win'
-    }
-  });
-  //JETS-Enforcers
-  await manager.update.match({
-    id: 26,
-    opponent1: {
-      score: 114,
-      result: 'win'
-    },
-    opponent2: {
-      score: 109
-    }
-  });
-  //Ballers-GGT
-  await manager.update.match({
-    id: 27,
-    opponent1: {
-      score: 92,
-    },
-    opponent2: {
-      score: 98,
-      result:'win'
-    }
-  });
-  //Round 4
-  await manager.update.match({
-    id: 28,
-    opponent1: {
-      score: teamData.filter((e) => e.name == 'Suicide Squad')[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == 'La Résistance')[0].score
-    }
-  });
-  await manager.update.match({
-    id: 29,
-    opponent1: {
-      score: teamData.filter((e) => e.name == 'J E T S JETSJETSJETS')[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == 'Greg’s Great Team')[0].score
-    }
-  });
-
-
-
 
   cachedData = JSON.stringify(db);
   nextFetch = Date.now() + 15000;
