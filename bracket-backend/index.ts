@@ -29,7 +29,7 @@ function fetchPage(url: string): Promise<string> {
 }
 
 async function getYahooData(): Promise<any[]> {
-  const d1Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleague?matchup_week=6&module=matchups&lhst=matchups');
+  const d1Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleague?matchup_week=7&module=matchups&lhst=matchups');
   const d1Dom = cheerio.load(d1Data);
   weekIsFinal = d1Dom('#matchupweek').find('div.Bg-shade').find('div.Ta-end').find('span').html() == 'Final results';
   const d1MatchupRows = d1Dom('#matchupweek')
@@ -37,7 +37,7 @@ async function getYahooData(): Promise<any[]> {
     .find('li');
   const d1TeamContainers = d1MatchupRows
     .find('div.Grid-h-mid.Nowrap');
-  const d2Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleaguedivision2?matchup_week=6&module=matchups&lhst=matchups');
+  const d2Data = await fetchPage('https://football.fantasysports.yahoo.com/league/cadlefantasyleaguedivision2?matchup_week=7&module=matchups&lhst=matchups');
   const d2Dom = cheerio.load(d2Data);
   const d2MatchupRows = d2Dom('#matchupweek')
     .find('.List')
@@ -100,45 +100,41 @@ async function buildBracket(): Promise<string> {
     name: 'CMCC',
     type: 'single_elimination',
     seeding: [
-      t_ostriches,
-      t_mdm,
-      t_skylines,
-      t_ghost,
-
-      t_auto,
-      t_asp,
-      t_slingers,
-      t_sorc,
-
+      t_captain,
+      t_muffin,
+      t_lares,
+      t_jets,
       t_freaks,
       null,
       t_ballers,
       t_chairs,
 
-      t_ptown,
+      t_ggt,
       null,
-      t_hernandez,
+      t_prince,
       null,
-
+      t_auto,
+      t_asp,
+      t_slingers,
+      t_sorc,
+      
       t_kats,
       t_hudds,
       t_farrelly,
       t_father,
-      
       t_tuck,
       null,
       t_enforcers,
       null,
 
-      t_captain,
-      t_muffin,
-      t_lares,
-      t_jets,
-
-      t_ggt,
+      t_ptown,
       null,
-      t_prince,
-      null  
+      t_hernandez,
+      null,
+      t_ostriches,
+      t_mdm,
+      t_skylines,
+      t_ghost
     ],
     settings: {
       seedOrdering: ['natural']
@@ -149,25 +145,35 @@ async function buildBracket(): Promise<string> {
   await manager.update.match({
     id: 0,
     opponent1: {
-      score: 85,
+      score: 100,
       result: 'win'
     },
     opponent2: {
-      score: 76
+      score: 77
     }
   });
   await manager.update.match({
     id: 1,
     opponent1: {
-      score: 74
+      score: 81,
     },
     opponent2: {
-      score: 102,
+      score: 86,
+      result:'win'
+    }
+  });
+  await manager.update.match({
+    id: 3,
+    opponent1: {
+      score: 68,
+    },
+    opponent2: {
+      score: 82,
       result: 'win'
     }
   });
   await manager.update.match({
-    id: 2,
+    id: 6,
     opponent1: {
       score: 116,
       result: 'win'
@@ -177,23 +183,13 @@ async function buildBracket(): Promise<string> {
     }
   });
   await manager.update.match({
-    id: 3,
+    id: 7,
     opponent1: {
       score: 93,
       result: 'win'
     },
     opponent2: {
       score: 80
-    }
-  });
-  await manager.update.match({
-    id: 5,
-    opponent1: {
-      score: 68,
-    },
-    opponent2: {
-      score: 82,
-      result: 'win'
     }
   });
   await manager.update.match({
@@ -217,99 +213,143 @@ async function buildBracket(): Promise<string> {
     }
   });
   await manager.update.match({
-    id: 12,
+    id: 14,
     opponent1: {
-      score: 100,
+      score: 85,
       result: 'win'
     },
     opponent2: {
-      score: 77
+      score: 76
     }
   });
   await manager.update.match({
-    id: 13,
+    id: 15,
     opponent1: {
-      score: 81,
+      score: 74
+    },
+    opponent2: {
+      score: 102,
+      result: 'win'
+    }
+  });
+
+  //Round 2
+  await manager.update.match({
+    id: 16,
+    opponent1: {
+      score: 96,
+      result: 'win'
+    },
+    opponent2: {
+      score: 66
+    }
+  });
+  await manager.update.match({
+    id: 17,
+    opponent1: {
+      score: 91,
+      result: 'win'
+    },
+    opponent2: {
+      score: 74
+    }
+  });
+  await manager.update.match({
+    id: 18,
+    opponent1: {
+      score: 107
+    },
+    opponent2: {
+      score: 121,
+      result: 'win'
+    }
+  });
+  await manager.update.match({
+    id: 19,
+    opponent1: {
+      score: 73,
+      result:'win'
+    },
+    opponent2: {
+      score: 67
+    }
+  });
+  await manager.update.match({
+    id: 20,
+    opponent1: {
+      score: 58,
     },
     opponent2: {
       score: 86,
       result:'win'
     }
   });
-  
-  
-
-  //Round 2
-  await manager.update.match({
-    id: 16,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_ostriches)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_ghost)[0].score
-    }
-  });
-  await manager.update.match({
-    id: 17,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_auto)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_slingers)[0].score
-    }
-  });
-  await manager.update.match({
-    id: 18,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_freaks)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_chairs)[0].score
-    }
-  });
-  await manager.update.match({
-    id: 19,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_ptown)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_hernandez)[0].score
-    }
-  });
-  await manager.update.match({
-    id: 20,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_kats)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_father)[0].score
-    }
-  });
   await manager.update.match({
     id: 21,
     opponent1: {
-      score: teamData.filter((e) => e.name == t_tuck)[0].score,
+      score: 46,
+    },
+    opponent2: {
+      score: 60,
+      result:'win'
+    }
+  });
+  await manager.update.match({
+    id: 22,
+    opponent1: {
+      score: 106,
+      result: 'win'
+    },
+    opponent2: {
+      score: 74
+    }
+  });
+  await manager.update.match({
+    id: 23,
+    opponent1: {
+      score: 98,
+      result:'win'
+    },
+    opponent2: {
+      score: 72
+    }
+  });
+
+  //Round 3
+  await manager.update.match({
+    id: 24,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_captain)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_freaks)[0].score
+    }
+  });
+  await manager.update.match({
+    id: 25,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_prince)[0].score,
+    },
+    opponent2: {
+      score: teamData.filter((e) => e.name == t_auto)[0].score
+    }
+  });
+  await manager.update.match({
+    id: 26,
+    opponent1: {
+      score: teamData.filter((e) => e.name == t_father)[0].score,
     },
     opponent2: {
       score: teamData.filter((e) => e.name == t_enforcers)[0].score
     }
   });
   await manager.update.match({
-    id: 22,
+    id: 27,
     opponent1: {
-      score: teamData.filter((e) => e.name == t_captain)[0].score,
+      score: teamData.filter((e) => e.name == t_ptown)[0].score,
     },
     opponent2: {
-      score: teamData.filter((e) => e.name == t_jets)[0].score
-    }
-  });
-  await manager.update.match({
-    id: 23,
-    opponent1: {
-      score: teamData.filter((e) => e.name == t_ggt)[0].score,
-    },
-    opponent2: {
-      score: teamData.filter((e) => e.name == t_prince)[0].score
+      score: teamData.filter((e) => e.name == t_ostriches)[0].score
     }
   });
 
